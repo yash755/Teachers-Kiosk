@@ -1,0 +1,2 @@
+# TeachersKiosk
+Android Minor
