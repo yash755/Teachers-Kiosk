@@ -1,6 +1,9 @@
 package com.example.yash.registerlogin;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
  import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,23 +35,24 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         button = (Button) findViewById(R.id.button);
 
-        button.setOnClickListener(this);
-        textView.setOnClickListener(this);
+
+
 
         userlocalstore = new Userlocalstore(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        // check if you are connected or not
+        if(isConnected()){
+            Toast.makeText(getApplicationContext(), "You are Conncted", Toast.LENGTH_SHORT).show();
+            button.setOnClickListener(this);
+            textView.setOnClickListener(this);
 
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "You are Not Conncted", Toast.LENGTH_SHORT).show();
+            button.setOnClickListener(this);
+            textView.setOnClickListener(this);
+        }
     }
 
 
@@ -56,17 +61,29 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.button:
+                if(isConnected()) {
+                    if(!validate())
+                        Toast.makeText(getApplicationContext(), "Fill All Credentials", Toast.LENGTH_SHORT).show();
+                    else {
 
-                User user = new User(null,null);
+                        User user = new User(null, null);
 
-                userlocalstore.userData(user);
-                userlocalstore.setUserloggedIn(true);
+                        userlocalstore.userData(user);
+                        userlocalstore.setUserloggedIn(true);
 
-              startActivity(new Intent(this, MainActivity.class));
+                        startActivity(new Intent(this, MainActivity.class));
+                    }
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "You are Not Conncted", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.textView:
+
+                if(isConnected())
                 startActivity(new Intent(this,Register.class));
+                    else
+                    Toast.makeText(getApplicationContext(), "You are Not Conncted", Toast.LENGTH_SHORT).show();
                 break;
         }
 
@@ -80,4 +97,24 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         finish();
     }
     */
+
+
+    public boolean isConnected(){
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected())
+            return true;
+        else
+            return false;
+    }
+
+
+    private boolean validate(){
+        if(editText.getText().toString().trim().equals(""))
+            return false;
+        else if(editText2.getText().toString().trim().equals(""))
+            return false;
+        else
+            return true;
+    }
 }

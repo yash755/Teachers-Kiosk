@@ -11,6 +11,7 @@
     tools:showIn="@layout/activity_login" tools:context="com.example.yash.registerlogin.Login"
     android:weightSum="1">
 
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
