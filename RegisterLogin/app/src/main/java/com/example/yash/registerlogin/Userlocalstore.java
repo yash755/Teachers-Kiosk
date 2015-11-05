@@ -39,6 +39,14 @@ public class Userlocalstore{
 
     }
 
+    public boolean getuserloggedIn(){
+
+        if(userLocalDatabase.getBoolean("loggedIn",false) == true)
+        return true;
+        else
+        return false;
+    }
+
     public void clearUserdata(){
         SharedPreferences.Editor speditor = userLocalDatabase.edit();
         speditor.clear();

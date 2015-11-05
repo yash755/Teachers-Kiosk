@@ -45,6 +45,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         userlocalstore = new Userlocalstore(this);
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(authenticate() == true)
+        {
+            displayUserdetails();
+        }
+        else
+            startActivity(new Intent(this,Login.class));
+
+
+
+    }
+
+    private boolean authenticate(){
+        return userlocalstore.getuserloggedIn();
+    }
+
+    public void displayUserdetails(){
+
+        User user = userlocalstore.getloggedInUser();
+
+        editText.setText(user.username);
+        editText3.setText(user.name);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
