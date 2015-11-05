@@ -2,6 +2,7 @@ package com.example.yash.registerlogin;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -88,19 +89,20 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         Toast.makeText(getApplicationContext(), "Fill All Credentials", Toast.LENGTH_SHORT).show();
                     else {
 
-                        AsyncT asyncT = new AsyncT();
-                        asyncT.execute();
+                       /* AsyncT asyncT = new AsyncT();
+                        asyncT.execute();*/
 
+                      String username = editText.getText().toString();
+                        String password = editText2.getText().toString();
 
-                      //  User user = new User(username,password);
+                        User user = new User(username, password);
 
-
-                  //      User user = new User(null, null);
+                        authenticate(user);
 
                        // userlocalstore.userData(user);
                        // userlocalstore.setUserloggedIn(true);
 
-                        startActivity(new Intent(this, MainActivity.class));
+                      //  startActivity(new Intent(this, MainActivity.class));
                     }
                 }
                 else
@@ -127,6 +129,39 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
     */
 
+    private void authenticate(User user) {
+
+        ServerRequest serverRequest = new ServerRequest(this);
+        serverRequest.fetchuserdatainbackground(user, new GetUserCallBack() {
+            @Override
+            public void done(User returneduser) {
+                if(returneduser == null) {
+
+                    showerrormessage();
+                }
+                else{
+                    loguserin(returneduser);
+                }
+                }
+            }
+        );
+    }
+
+    private void showerrormessage(){
+        AlertDialog.Builder dialogbuilder = new AlertDialog.Builder(Login.this);
+        dialogbuilder.setMessage("Worong Credentials");
+        dialogbuilder.setPositiveButton("OKAY",null);
+        dialogbuilder.show();
+    }
+
+    private void loguserin(User returneduser ){
+
+        userlocalstore.userData(returneduser);
+        userlocalstore.setUserloggedIn(true);
+
+        startActivity(new Intent(this, MainActivity.class));
+
+    }
 
     public boolean isConnected(){
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
@@ -161,11 +196,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 jsonobj.put("user","13103485" );
                 jsonobj.put("pass", "yash&9654195909");
                 jsonobj.put("usertype", "S");
-                jsonobj.put("date1", "01-12-1994");
+                jsonobj.put("date1", "24-02-1995");
 
 
                 StringEntity se = new StringEntity( jsonobj.toString());
                 se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+                System.out.println("I am here");
               //  post.setEntity(se);
                // response = client.execute(post);
 
@@ -179,6 +216,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                 // Execute HTTP Post Request
                 HttpResponse response = httpclient.execute(httppost);
+                System.out.println("I am here");
                 InputStream inputStream = response.getEntity().getContent();
                 InputStreamToStringExample str = new InputStreamToStringExample();
                 responseServer = str.getStringFromInputStream(inputStream);
@@ -216,7 +254,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
 
         // convert InputStream to String
-        private static String getStringFromInputStream(InputStream is) {
+        static String getStringFromInputStream(InputStream is) {
 
             BufferedReader br = null;
             StringBuilder sb = new StringBuilder();
