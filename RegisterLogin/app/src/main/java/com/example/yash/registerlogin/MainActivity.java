@@ -11,11 +11,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button button3;
-    EditText editText,editText3;
+    TextView textView;
     Userlocalstore userlocalstore;
 
     @Override
@@ -23,24 +24,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editText = (EditText) findViewById(R.id.editText);
-        editText3 = (EditText) findViewById(R.id.editText3);
-
+        textView = (TextView) findViewById(R.id.textView);
         button3 = (Button) findViewById(R.id.button3);
 
         button3.setOnClickListener(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         userlocalstore = new Userlocalstore(this);
     }
@@ -68,8 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         User user = userlocalstore.getloggedInUser();
 
-        editText.setText(user.username);
-        editText3.setText(user.name);
+        textView.setText("Hello" + user.user);
     }
 
     @Override
