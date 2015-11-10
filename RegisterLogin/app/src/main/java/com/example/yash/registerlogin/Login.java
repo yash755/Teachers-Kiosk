@@ -37,16 +37,20 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         userlocalstore = new Userlocalstore(this);
 
-
-        // check if you are connected or not
-        if(isConnected()){
-            Toast.makeText(getApplicationContext(), "You are Conncted", Toast.LENGTH_SHORT).show();
-            button.setOnClickListener(this);
-
+        if(userlocalstore.getuserloggedIn()) {
+            startActivity(new Intent(this, MainActivity.class));
         }
-        else{
-            Toast.makeText(getApplicationContext(), "You are Not Conncted", Toast.LENGTH_SHORT).show();
-            button.setOnClickListener(this);
+        else {
+
+            // check if you are connected or not
+            if (isConnected()) {
+                Toast.makeText(getApplicationContext(), "You are Conncted", Toast.LENGTH_SHORT).show();
+                button.setOnClickListener(this);
+
+            } else {
+                Toast.makeText(getApplicationContext(), "You are Not Conncted", Toast.LENGTH_SHORT).show();
+                button.setOnClickListener(this);
+            }
         }
     }
 

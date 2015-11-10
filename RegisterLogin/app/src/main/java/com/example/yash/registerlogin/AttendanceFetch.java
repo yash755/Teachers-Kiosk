@@ -1,9 +1,13 @@
 package com.example.yash.registerlogin;
 
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.Toast;
 
 
 import org.apache.http.HttpResponse;
@@ -13,6 +17,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -20,13 +26,14 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import android.os.Handler;
 
-
-public class ServerRequest {
+public class AttendanceFetch{
 
     ProgressDialog progressDialog;
 
-    public ServerRequest(Context context){
+    public AttendanceFetch(Context context){
+
 
         progressDialog = new ProgressDialog(context);
         progressDialog.setCancelable(false);
@@ -37,49 +44,36 @@ public class ServerRequest {
     }
 
 
-
-    public void fetchuserdatainbackground(User user,GetUserCallBack userCallBack){
+    public void fetchuserdatainbackground(User user, GetDataCallBack getDataCallBack){
         progressDialog.show();
-        new fetchuserdataasynctask(user,userCallBack).execute();
+        new fetchuserdataasynctask(user,getDataCallBack).execute();
     }
 
 
-
-    public class fetchuserdataasynctask extends AsyncTask<Void,Void,User> {
-
+    public class fetchuserdataasynctask extends AsyncTask<Void, Void, JSONArray> {
         User user;
-        GetUserCallBack userCallBack;
+        GetDataCallBack getDataCallBack;
 
-
-
-
-        public fetchuserdataasynctask(User user,GetUserCallBack userCallBack){
+        public fetchuserdataasynctask(User user, GetDataCallBack getDataCallBack){
 
             this.user = user;
-            this.userCallBack = userCallBack;
-
-
+            this.getDataCallBack = getDataCallBack;
         }
 
         @Override
-                protected User doInBackground(Void... voids) {
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpPost  httppost = new HttpPost("http://probase.anip.xyz:8080/login_action");
-                User returneduser = null;
+        protected JSONArray doInBackground(Void... params) {
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost("http://probase.anip.xyz:8080/students/all/list");
 
-            try{
+            JSONArray jsonArray = null;
+            try {
 
                 JSONObject jsonobj = new JSONObject();
 
                 System.out.println("I am here");
                 jsonobj.put("user", user.user);
-                jsonobj.put("pass", user.password);
-                jsonobj.put("usertype", "S");
-                jsonobj.put("date1", "24-02-1995");
 
-                String pass = (String) jsonobj.get("pass");
-
-                StringEntity se = new StringEntity( jsonobj.toString());
+                StringEntity se = new StringEntity(jsonobj.toString());
                 se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
 
@@ -87,51 +81,47 @@ public class ServerRequest {
 
 
                 HttpResponse response = httpclient.execute(httppost);
-               InputStream inputStream = response.getEntity().getContent();
+                InputStream inputStream = response.getEntity().getContent();
                 ServerRequest.InputStreamToStringExample str = new ServerRequest.InputStreamToStringExample();
                 String responseServer = str.getStringFromInputStream(inputStream);
 
+             JSONObject jsonobj1 = new JSONObject(responseServer);
+                jsonArray = jsonobj1.getJSONArray("students");
+                System.out.println(jsonArray);
 
-                System.out.println(responseServer);
+                return jsonArray;
 
-
-                JSONObject jsonobj1 = new JSONObject(responseServer);
-
-                if(jsonobj1.length() == 1){
-
-                    String error = (String) jsonobj1.get("error");
-                    returneduser = new User(error);
-
-                }
-                else {
-
-                    String username = (String) jsonobj1.get("user");
-                    String authkey = (String) jsonobj1.get("authkey");
-                    String success = (String) jsonobj1.get("success");
-                    String usertype = (String) jsonobj1.get("usertype");
-                    System.out.println(username + authkey + success + usertype + pass);
-
-                    returneduser = new User(username,pass,authkey,success,usertype);
-
-
-                }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return returneduser;
+
+
+            return jsonArray;
         }
 
 
 
         @Override
-        protected void onPostExecute(User returneduser) {
+        protected void onPostExecute(JSONArray jsonArray) {
+
 
             progressDialog.dismiss();
-            userCallBack.done(returneduser);
+        //    super.onPostExecute(jsonArray);
 
 
-            super.onPostExecute(returneduser);
+
+         /*   if (jsonArray.length() > 0) {
+                System.out.println(jsonArray.length());
+                MainActivity.writeJSONArray(jsonArray, 1);
+            }
+            else {
+                System.out.println(jsonArray.length());
+                MainActivity.writeJSONArray(jsonArray, 0);
+            }*/
+            getDataCallBack.done(jsonArray);
+            super.onPostExecute(jsonArray);
+
         }
     }
 
@@ -180,4 +170,14 @@ public class ServerRequest {
 
     }
 
+
+
+
+
+
+
+
+
+
 }
+

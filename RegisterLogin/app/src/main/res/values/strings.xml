@@ -5,4 +5,5 @@
     <string name="title_activity_register">Register</string>
     <string name="title_activity_user">User</string>
     <string name="title_activity_userlocalstore">Userlocalstore</string>
+    <string name="title_activity_attendance_fetch">AttendanceFetch</string>
 </resources>
