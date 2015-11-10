@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 
@@ -18,7 +20,9 @@ import android.widget.Toast;
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
     Button button;
-    EditText editText,editText2;
+    EditText editText,editText2,editText3;
+    RadioGroup radiousertype;
+    RadioButton radioButton;
 
     Userlocalstore userlocalstore;
 
@@ -29,8 +33,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         editText = (EditText) findViewById(R.id.editText);
         editText2 = (EditText) findViewById(R.id.editText2);
+        editText3 = (EditText) findViewById(R.id.editText3);
 
         button = (Button) findViewById(R.id.button);
+        radiousertype = (RadioGroup) findViewById(R.id.radiousertype);
 
 
 
@@ -65,10 +71,22 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         Toast.makeText(getApplicationContext(), "Fill All Credentials", Toast.LENGTH_SHORT).show();
                     else {
 
+                        int selectedId = radiousertype.getCheckedRadioButtonId();
+                        radioButton = (RadioButton) findViewById(selectedId);
+
+                        String usertype =radioButton.getText().toString();
                         String username = editText.getText().toString();
                         String password = editText2.getText().toString();
+                        String date     = editText3.getText().toString();
 
-                        User user = new User(username, password);
+                        if(usertype.equals("Teacher"))
+                            usertype = "E";
+                        else
+                            usertype = "S";
+
+                        System.out.println(usertype);
+
+                        User user = new User(username, password,usertype,date);
 
                         authenticate(user);
 

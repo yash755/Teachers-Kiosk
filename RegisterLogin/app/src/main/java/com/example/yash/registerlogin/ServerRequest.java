@@ -74,8 +74,8 @@ public class ServerRequest {
                 System.out.println("I am here");
                 jsonobj.put("user", user.user);
                 jsonobj.put("pass", user.password);
-                jsonobj.put("usertype", "S");
-                jsonobj.put("date1", "24-02-1995");
+                jsonobj.put("usertype",user.usertype);
+                jsonobj.put("date1",user.date);
 
                 String pass = (String) jsonobj.get("pass");
 
