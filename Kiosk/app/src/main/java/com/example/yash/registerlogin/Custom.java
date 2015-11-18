@@ -1,6 +1,7 @@
 package com.example.yash.registerlogin;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class Custom extends ArrayAdapter<String> {
         View customView = inflater.inflate(R.layout.te, parent, false);
         TextView t1 = (TextView)customView.findViewById(R.id.te2);
         TextView t2 = (TextView)customView.findViewById(R.id.te3);
-
+        customView.setBackgroundColor(Color.CYAN);
         t1.setText(list1.get(position));
         t2.setText(list2.get(position));
 

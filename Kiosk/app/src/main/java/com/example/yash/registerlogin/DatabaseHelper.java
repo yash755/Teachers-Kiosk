@@ -15,6 +15,15 @@ public class DatabaseHelper  extends SQLiteOpenHelper{
     public static final String COL_1 = "batch";
     public static final String COL_2 = "eno";
     public static final String COL_3 = "name";
+    public static final String TABLE_NAME1 = "attendance_table";
+    public static final String COL_4 = "date";
+    public static final String COL_5 = "time";
+    public static final String COL_6 = "eno";
+
+
+
+
+
 
 
     public DatabaseHelper(Context context) {
@@ -26,6 +35,7 @@ public class DatabaseHelper  extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("create table " + TABLE_NAME + "(batch String ,eno String Primary Key,name String )");
+        db.execSQL("create table " + TABLE_NAME1 + "(date Date ,time DateTime,eno String Primary Key)");
 
     }
 

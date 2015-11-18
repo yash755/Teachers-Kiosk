@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+
 public class yash1 extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,30 +66,35 @@ public class yash1 extends AppCompatActivity {
                                     long arg3) {
 
               //  arg0.getChildAt(position).setBackgroundColor(Color.BLUE);
-
+             //   arg1.setBackgroundColor(Color.BLUE);
               //  Toast.makeText(yash1.this, "Clicked", Toast.LENGTH_SHORT).show();
                 if (SwipeDetector.swipeDetected()) {
                   //
                    if (SwipeDetector.getAction() == SwipeDetector.Action.RL) {
-                   //    arg1.setBackgroundColor(Color.RED);
+                       arg1.setBackgroundColor(Color.RED);
+
+
+
+
+                       //arg1.setTranslationX(parseFloat("70dp"));
                /*        if (save != -1 && save != position){
                            arg0.getChildAt(position).setBackgroundColor(Color.RED);
                        }
                        save = position;*/
-                       arg0.getChildAt(position).setBackgroundColor(Color.RED);
+                      // arg0.getChildAt(position).setBackgroundColor(Color.RED);
 
 
                        // Toast.makeText(yash1.this, "Absent", Toast.LENGTH_SHORT).show();
 
                     } else if (SwipeDetector.getAction() == SwipeDetector.Action.LR) {
 
-                       arg0.getChildAt(position).setBackgroundColor(Color.BLUE);
-
+                     // arg0.getChildAt(position).setBackgroundColor(Color.BLUE);
+                       //arg1.setTranslationX(parseFloat("70dp"));
                      /*  if (save != -1 && save != position){
                            arg0.getChildAt(position).setBackgroundColor(Color.GREEN);
                        }
                        save = position;*/
-                  //     arg1.setBackgroundColor(Color.BLUE);
+                      arg1.setBackgroundColor(Color.BLUE);
                       // Toast.makeText(yash1.this, "PRESENT", Toast.LENGTH_SHORT).show();
                     }
                     else
