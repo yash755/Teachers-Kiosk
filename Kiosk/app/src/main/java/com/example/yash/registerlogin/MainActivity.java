@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
    DatabaseHelper teacher_db;
 
 
-    Button button3,button2,button4;
+    Button button3,button2,button4,button5;
     TextView textView;
     Userlocalstore userlocalstore;
 
@@ -34,10 +34,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button3 = (Button) findViewById(R.id.button3);
         button2 = (Button) findViewById(R.id.button2);
         button4 = (Button) findViewById(R.id.button4);
+        button5 = (Button) findViewById(R.id.button5);
 
         button3.setOnClickListener(this);
         button2.setOnClickListener(this);
         button4.setOnClickListener(this);
+        button5.setOnClickListener(this);
 
 
         userlocalstore = new Userlocalstore(this);
@@ -92,6 +94,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 System.out.println("Yash !!1");
                 startActivity(new Intent(this,yash1.class));
                 break;
+            case R.id.button5:
+                System.out.println("Yash !!1");
+                startActivity(new Intent(this,notification.class));
+                break;
 
         }
 
@@ -141,10 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean isConnected(){
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected())
-            return true;
-        else
-            return false;
+        return networkInfo != null && networkInfo.isConnected();
     }
 
 

@@ -10,4 +10,6 @@
     <string name="title_activity_attendance_list">AttendanceListActivity</string>
     <string name="title_activity_yash1">yash1</string>
     <string name="title_activity_yash2">yash2</string>
+    <string name="title_activity_notification">notification</string>
+    <string name="title_activity_upload_attendace">UploadAttendace</string>
 </resources>

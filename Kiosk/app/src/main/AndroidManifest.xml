@@ -77,6 +77,16 @@
             android:label="@string/title_activity_yash2"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".notification"
+            android:label="@string/title_activity_notification"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".UploadAttendace"
+            android:label="@string/title_activity_upload_attendace"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>
