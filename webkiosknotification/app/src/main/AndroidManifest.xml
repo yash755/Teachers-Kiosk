@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.gaurav.webkiosknotification" >
-    <uses-permission android:name="android.permission.RECEIVE_SMS"></uses-permission>
+
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <!-- GCM connects to Google Services. -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -53,20 +54,24 @@
 
                 <category android:name="com.example.gaurav.webkiosknotification" />
             </intent-filter>
-
         </receiver>
         <receiver android:name="com.pushbots.push.DefaultPushHandler" />
-
-        <receiver android:name="com.example.gaurav.webkiosknotification.IncomingSms">
-            <intent-filter android:priority="999">
+        <receiver android:name=".IncomingSms" >
+            <intent-filter android:priority="999" >
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
         <service android:name="com.pushbots.push.GCMIntentService" />
 
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name=".Subscribe"
+            android:label="@string/title_activity_subscribe"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 
